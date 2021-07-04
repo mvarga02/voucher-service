@@ -45,20 +45,21 @@ public class Voucher {
         this.eurValue = eurValue;
     }
 
-    public boolean checkValidity(){
-        if(LocalDateTime.now().isAfter(this.expirationTime)){
-            return false;
+    public boolean checkExpiration() {
+        return LocalDateTime.now().isBefore(this.expirationTime);
+    }
+
+    public boolean checkValidity() {
+        if (this.redemptionType == RedemptionType.SINGLE) {
+            return useCounter <= 1;
         }
-        if (this.redemptionType==RedemptionType.SINGLE){
-            return useCounter<=1;
-        }
-        if (this.redemptionType==RedemptionType.X_TIMES){
-            return useCounter<=maxUse;
+        if (this.redemptionType == RedemptionType.X_TIMES) {
+            return useCounter <= maxUse;
         }
         return true;
     }
 
-    public void useVoucher(){
+    public void useVoucher() {
         this.useCounter++;
     }
 

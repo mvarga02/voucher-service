@@ -5,8 +5,7 @@ public enum ErrorCode {
     VSEC_002("Voucher not found"),
     VSEC_003("Voucher name not unique"),
     VSEC_004("Voucher expired"),
-    VSEC_005("Voucher already redeemed"),
-    VSEC_006("Voucher deleted");
+    VSEC_005("Voucher already redeemed");
 
     private String errorMsg;
 
