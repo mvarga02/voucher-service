@@ -32,6 +32,7 @@ public class ClientController {
         try {
             return new ResponseEntity<>(voucherService.useVoucher(request.getVoucherCode()), HttpStatus.OK);
         } catch (VoucherNotFoundException | VoucherAlreadyRedeemedException | VoucherInvalidDataException | VoucherExpiredException e) {
+            LOGGER.warn(e.getLocalizedMessage());
             return new ResponseEntity<>(e, HttpStatus.FORBIDDEN);
         }
     }
