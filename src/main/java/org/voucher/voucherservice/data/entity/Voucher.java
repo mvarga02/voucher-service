@@ -1,5 +1,6 @@
 package org.voucher.voucherservice.data.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.voucher.voucherservice.data.enums.RedemptionType;
 
 import javax.persistence.Column;
@@ -20,7 +21,8 @@ public class Voucher {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RedemptionType redemptionType;
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
     private LocalDateTime createdTime;
     @Column(nullable = false)
     private LocalDateTime expirationTime;
@@ -32,5 +34,74 @@ public class Voucher {
     private Double eurValue;
 
     public Voucher() {
+    }
+
+    public Voucher(String name, RedemptionType redemptionType, LocalDateTime expirationTime, Long useCounter, Long maxUse, Double eurValue) {
+        this.name = name;
+        this.redemptionType = redemptionType;
+        this.expirationTime = expirationTime;
+        this.useCounter = useCounter;
+        this.maxUse = maxUse;
+        this.eurValue = eurValue;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public RedemptionType getRedemptionType() {
+        return redemptionType;
+    }
+
+    public void setRedemptionType(RedemptionType redemptionType) {
+        this.redemptionType = redemptionType;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public LocalDateTime getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(LocalDateTime expirationTime) {
+        this.expirationTime = expirationTime;
+    }
+
+    public Long getUseCounter() {
+        return useCounter;
+    }
+
+    public void setUseCounter(Long useCounter) {
+        this.useCounter = useCounter;
+    }
+
+    public Long getMaxUse() {
+        return maxUse;
+    }
+
+    public void setMaxUse(Long maxUse) {
+        this.maxUse = maxUse;
+    }
+
+    public Double getEurValue() {
+        return eurValue;
+    }
+
+    public void setEurValue(Double eurValue) {
+        this.eurValue = eurValue;
     }
 }
