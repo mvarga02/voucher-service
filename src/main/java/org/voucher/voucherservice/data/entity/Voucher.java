@@ -17,7 +17,7 @@ public class Voucher {
     @GeneratedValue
     private Long id;
     @Column(nullable = false, unique = true, length = 128)
-    private String name;
+    private String code;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RedemptionType redemptionType;
@@ -36,25 +36,42 @@ public class Voucher {
     public Voucher() {
     }
 
-    public Voucher(String name, RedemptionType redemptionType, LocalDateTime expirationTime, Long useCounter, Long maxUse, Double eurValue) {
-        this.name = name;
+    public Voucher(String code, RedemptionType redemptionType, LocalDateTime expirationTime, Long maxUse, Double eurValue) {
+        this.code = code;
         this.redemptionType = redemptionType;
         this.expirationTime = expirationTime;
-        this.useCounter = useCounter;
+        this.useCounter = 0L;
         this.maxUse = maxUse;
         this.eurValue = eurValue;
+    }
+
+    public boolean checkValidity(){
+        if(LocalDateTime.now().isAfter(this.expirationTime)){
+            return false;
+        }
+        if (this.redemptionType==RedemptionType.SINGLE){
+            return useCounter<=1;
+        }
+        if (this.redemptionType==RedemptionType.X_TIMES){
+            return useCounter<=maxUse;
+        }
+        return true;
+    }
+
+    public void useVoucher(){
+        this.useCounter++;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String name) {
+        this.code = name;
     }
 
     public RedemptionType getRedemptionType() {
