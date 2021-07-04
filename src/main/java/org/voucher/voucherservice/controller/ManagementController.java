@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.voucher.voucherservice.data.domain.CreateMultiUseVoucherRequest;
 import org.voucher.voucherservice.data.domain.CreateSingleUseVoucherRequest;
 import org.voucher.voucherservice.data.domain.CreateXTimesUseVoucherRequest;
+import org.voucher.voucherservice.data.domain.VoucherInfoResponse;
 import org.voucher.voucherservice.service.VoucherService;
 
 @RestController
@@ -28,7 +29,7 @@ public class ManagementController {
     }
     @GetMapping(
             value = "voucher/{code}")
-    public ResponseEntity<?> getVoucherInfo(@PathVariable String voucherCode){
+    public ResponseEntity<VoucherInfoResponse> getVoucherInfo(@PathVariable String voucherCode){
 
     }
 
