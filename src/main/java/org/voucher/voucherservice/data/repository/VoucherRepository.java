@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface VoucherRepository extends CrudRepository<Voucher, Long> {
-    public Optional<Voucher> findVoucherByName(String name);
+     Optional<Voucher> findVoucherByCode(String code);
 }

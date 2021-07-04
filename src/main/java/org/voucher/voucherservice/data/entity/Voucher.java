@@ -2,6 +2,7 @@ package org.voucher.voucherservice.data.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.voucher.voucherservice.data.enums.RedemptionType;
+import org.voucher.voucherservice.data.enums.StatusType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +32,9 @@ public class Voucher {
     @Column(nullable = false)
     private Long maxUse;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusType statusType;
+    @Column(nullable = false)
     private Double eurValue;
 
     public Voucher() {
@@ -43,6 +47,7 @@ public class Voucher {
         this.useCounter = 0L;
         this.maxUse = maxUse;
         this.eurValue = eurValue;
+        this.statusType = StatusType.VALID;
     }
 
     public boolean checkExpiration() {
@@ -50,6 +55,9 @@ public class Voucher {
     }
 
     public boolean checkValidity() {
+        if (statusType == StatusType.INVALID) {
+            return false;
+        }
         if (this.redemptionType == RedemptionType.SINGLE) {
             return useCounter <= 1;
         }
@@ -121,5 +129,27 @@ public class Voucher {
 
     public void setEurValue(Double eurValue) {
         this.eurValue = eurValue;
+    }
+
+    public StatusType getStatusType() {
+        return statusType;
+    }
+
+    public void setStatusType(StatusType statusType) {
+        this.statusType = statusType;
+    }
+
+    @Override
+    public String toString() {
+        return "Voucher{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", redemptionType=" + redemptionType +
+                ", createdTime=" + createdTime +
+                ", expirationTime=" + expirationTime +
+                ", useCounter=" + useCounter +
+                ", maxUse=" + maxUse +
+                ", eurValue=" + eurValue +
+                '}';
     }
 }
