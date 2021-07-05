@@ -32,7 +32,6 @@ public class ClientController {
             , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> useVoucher(@RequestBody UseVoucherRequest request) throws VoucherNotFoundException, VoucherAlreadyRedeemedException, VoucherInvalidDataException, VoucherExpiredException {
         return new ResponseEntity<>(voucherService.useVoucher(request.getVoucherCode()), HttpStatus.OK);
-
     }
 
 }
