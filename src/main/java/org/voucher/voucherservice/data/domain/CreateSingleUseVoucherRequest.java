@@ -7,6 +7,9 @@ public class CreateSingleUseVoucherRequest {
     private LocalDateTime expirationDateTime;
     private Double eurValue;
 
+    public CreateSingleUseVoucherRequest() {
+    }
+
     public CreateSingleUseVoucherRequest(String voucherCode, LocalDateTime expirationDateTime, Double eurValue) {
         this.voucherCode = voucherCode;
         this.expirationDateTime = expirationDateTime;
@@ -23,6 +26,18 @@ public class CreateSingleUseVoucherRequest {
 
     public Double getEurValue() {
         return eurValue;
+    }
+
+    public void setVoucherCode(String voucherCode) {
+        this.voucherCode = voucherCode;
+    }
+
+    public void setExpirationDateTime(LocalDateTime expirationDateTime) {
+        this.expirationDateTime = expirationDateTime;
+    }
+
+    public void setEurValue(Double eurValue) {
+        this.eurValue = eurValue;
     }
 
     @Override

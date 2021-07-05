@@ -8,6 +8,9 @@ public class CreateXTimesUseVoucherRequest {
     private LocalDateTime expirationDateTime;
     private Double eurValue;
 
+    public CreateXTimesUseVoucherRequest() {
+    }
+
     public CreateXTimesUseVoucherRequest(String voucherCode, Long maxUse, LocalDateTime expirationDateTime, Double eurValue) {
         this.voucherCode = voucherCode;
         this.maxUse = maxUse;
@@ -29,6 +32,22 @@ public class CreateXTimesUseVoucherRequest {
 
     public Double getEurValue() {
         return eurValue;
+    }
+
+    public void setVoucherCode(String voucherCode) {
+        this.voucherCode = voucherCode;
+    }
+
+    public void setMaxUse(Long maxUse) {
+        this.maxUse = maxUse;
+    }
+
+    public void setExpirationDateTime(LocalDateTime expirationDateTime) {
+        this.expirationDateTime = expirationDateTime;
+    }
+
+    public void setEurValue(Double eurValue) {
+        this.eurValue = eurValue;
     }
 
     @Override
