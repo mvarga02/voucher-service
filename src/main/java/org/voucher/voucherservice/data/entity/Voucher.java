@@ -62,7 +62,7 @@ public class Voucher {
             return useCounter <= 1;
         }
         if (this.redemptionType == RedemptionType.X_TIMES) {
-            return useCounter <= maxUse;
+            return useCounter < maxUse;
         }
         return true;
     }

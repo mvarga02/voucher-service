@@ -9,7 +9,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,7 +16,7 @@ public class VoucherJournal {
     @Id
     @GeneratedValue
     private Long id;
-    @JoinColumn( nullable = false)
+    @Column( nullable = false)
     private Long voucherId;
     @Column(nullable = false, updatable = false)
     @CreationTimestamp

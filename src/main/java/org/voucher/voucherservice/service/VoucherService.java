@@ -59,8 +59,9 @@ public class VoucherService {
             throw new VoucherCodeNotUniqueException(voucher.getCode());
         }
         LOGGER.info("Saving voucher to db: {}", voucher);
-        journalRepository.save(new VoucherJournal(voucher.getId(), ActivityType.CREATED));
-        return voucherRepository.save(voucher);
+        voucherRepository.save(voucher);
+        createJournalEntry(voucher, ActivityType.CREATED);
+        return voucher;
     }
 
     public Voucher deleteVoucher(String code) throws VoucherNotFoundException, VoucherInvalidDataException {
@@ -68,7 +69,7 @@ public class VoucherService {
         LOGGER.info("Deleting voucher: {}", voucher);
         voucher.setStatusType(StatusType.DELETED);
         voucherRepository.save(voucher);
-        journalRepository.save(new VoucherJournal(voucher.getId(), ActivityType.DELETED));
+        createJournalEntry(voucher, ActivityType.DELETED);
         return voucher;
     }
 
@@ -89,7 +90,11 @@ public class VoucherService {
         LOGGER.info("Using voucher: {}", voucher);
         voucher.useVoucher();
         voucherRepository.save(voucher);
-        journalRepository.save(new VoucherJournal(voucher.getId(), ActivityType.USED));
+        createJournalEntry(voucher, ActivityType.USED);
         return voucher;
+    }
+
+    private void createJournalEntry(Voucher voucher, ActivityType activity){
+        journalRepository.save(new VoucherJournal(voucher.getId(), activity));
     }
 }
