@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,13 +30,9 @@ public class ClientController {
     @PutMapping(
             value = "redemption"
             , consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> useVoucher(@RequestBody UseVoucherRequest request) {
-        try {
-            return new ResponseEntity<>(voucherService.useVoucher(request.getVoucherCode()), HttpStatus.OK);
-        } catch (VoucherNotFoundException | VoucherAlreadyRedeemedException | VoucherInvalidDataException | VoucherExpiredException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.FORBIDDEN);
-        }
+    public ResponseEntity<?> useVoucher(@RequestBody UseVoucherRequest request) throws VoucherNotFoundException, VoucherAlreadyRedeemedException, VoucherInvalidDataException, VoucherExpiredException {
+        return new ResponseEntity<>(voucherService.useVoucher(request.getVoucherCode()), HttpStatus.OK);
+
     }
 
 }

@@ -42,90 +42,59 @@ public class ManagementController {
             value = "voucher/{code}"
             , produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> getVoucherInfo(@PathVariable String code) {
-        try {
-            Voucher voucher = voucherService.getVoucher(code);
-            List<VoucherJournal> journal = voucherService.getVoucherJournal(voucher.getId());
-            return new ResponseEntity<>(new VoucherInfoResponse(voucher, journal), HttpStatus.OK);
-        } catch (VoucherInvalidDataException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        } catch (VoucherNotFoundException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> getVoucherInfo(@PathVariable String code) throws VoucherNotFoundException, VoucherInvalidDataException {
+        Voucher voucher = voucherService.getVoucher(code);
+        List<VoucherJournal> journal = voucherService.getVoucherJournal(voucher.getId());
+        return new ResponseEntity<>(new VoucherInfoResponse(voucher, journal), HttpStatus.OK);
     }
 
     @PostMapping(
             value = "create/single"
             , consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createSingleUseVoucher(@RequestBody CreateSingleUseVoucherRequest request) {
-        try {
-            Voucher voucher =
-                    voucherService.saveVoucher(
-                            VoucherFactory
-                                    .createSingleUseVoucher(
-                                            request.getVoucherCode()
-                                            , request.getExpirationDateTime()
-                                            , request.getEurValue()));
-            return new ResponseEntity<>(voucher, HttpStatus.OK);
-        } catch (VoucherInvalidDataException | VoucherCodeNotUniqueException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> createSingleUseVoucher(@RequestBody CreateSingleUseVoucherRequest request) throws VoucherInvalidDataException, VoucherCodeNotUniqueException {
+        Voucher voucher =
+                voucherService.saveVoucher(
+                        VoucherFactory
+                                .createSingleUseVoucher(
+                                        request.getVoucherCode()
+                                        , request.getExpirationDateTime()
+                                        , request.getEurValue()));
+        return new ResponseEntity<>(voucher, HttpStatus.OK);
     }
 
     @PostMapping(
             value = "create/multi"
             , consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createMultiUseVoucher(@RequestBody CreateMultiUseVoucherRequest request) {
-        try {
-            Voucher voucher =
-                    voucherService.saveVoucher(
-                            VoucherFactory
-                                    .createMultiUseVoucher(
-                                            request.getVoucherCode()
-                                            , request.getExpirationDateTime()
-                                            , request.getEurValue()));
-            return new ResponseEntity<>(voucher, HttpStatus.OK);
-        } catch (VoucherInvalidDataException | VoucherCodeNotUniqueException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> createMultiUseVoucher(@RequestBody CreateMultiUseVoucherRequest request) throws VoucherInvalidDataException, VoucherCodeNotUniqueException {
+        Voucher voucher =
+                voucherService.saveVoucher(
+                        VoucherFactory
+                                .createMultiUseVoucher(
+                                        request.getVoucherCode()
+                                        , request.getExpirationDateTime()
+                                        , request.getEurValue()));
+        return new ResponseEntity<>(voucher, HttpStatus.OK);
     }
 
     @PostMapping(
             value = "create/x-times"
             , consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createXTimesUseVoucher(@RequestBody CreateXTimesUseVoucherRequest request) {
-        try {
-            Voucher voucher =
-                    voucherService.saveVoucher(
-                            VoucherFactory
-                                    .createXTimesUseVoucher(
-                                            request.getVoucherCode()
-                                            , request.getMaxUse()
-                                            , request.getExpirationDateTime()
-                                            , request.getEurValue()));
-            return new ResponseEntity<>(voucher, HttpStatus.OK);
-        } catch (VoucherInvalidDataException | VoucherCodeNotUniqueException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> createXTimesUseVoucher(@RequestBody CreateXTimesUseVoucherRequest request) throws VoucherInvalidDataException, VoucherCodeNotUniqueException {
+        Voucher voucher =
+                voucherService.saveVoucher(
+                        VoucherFactory
+                                .createXTimesUseVoucher(
+                                        request.getVoucherCode()
+                                        , request.getMaxUse()
+                                        , request.getExpirationDateTime()
+                                        , request.getEurValue()));
+        return new ResponseEntity<>(voucher, HttpStatus.OK);
     }
 
     @DeleteMapping(
             value = "voucher/{code}")
-    public ResponseEntity<?> deleteVoucher(@PathVariable String code) {
-        try {
-            Voucher voucher = voucherService.deleteVoucher(code);
-            return new ResponseEntity<>(voucher, HttpStatus.OK);
-        } catch (VoucherInvalidDataException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        } catch (VoucherNotFoundException e) {
-            LOGGER.warn(e.getLocalizedMessage());
-            return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> deleteVoucher(@PathVariable String code) throws VoucherNotFoundException, VoucherInvalidDataException {
+        Voucher voucher = voucherService.deleteVoucher(code);
+        return new ResponseEntity<>(voucher, HttpStatus.OK);
     }
 }
