@@ -12,4 +12,8 @@ public enum ErrorCode {
     ErrorCode(String errorMsg){
         this.errorMsg=errorMsg;
     }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
 }
