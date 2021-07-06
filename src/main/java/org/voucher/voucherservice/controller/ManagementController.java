@@ -30,8 +30,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/management")
 public class ManagementController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ManagementController.class);
-
     private final VoucherService voucherService;
 
     public ManagementController(VoucherService voucherService) {
@@ -59,7 +57,7 @@ public class ManagementController {
                                         request.getVoucherCode()
                                         , request.getExpirationDateTime()
                                         , request.getEurValue()));
-        return new ResponseEntity<>(voucher, HttpStatus.OK);
+        return new ResponseEntity<>(voucher, HttpStatus.CREATED);
     }
 
     @PostMapping(
@@ -73,7 +71,7 @@ public class ManagementController {
                                         request.getVoucherCode()
                                         , request.getExpirationDateTime()
                                         , request.getEurValue()));
-        return new ResponseEntity<>(voucher, HttpStatus.OK);
+        return new ResponseEntity<>(voucher, HttpStatus.CREATED);
     }
 
     @PostMapping(
@@ -88,7 +86,7 @@ public class ManagementController {
                                         , request.getMaxUse()
                                         , request.getExpirationDateTime()
                                         , request.getEurValue()));
-        return new ResponseEntity<>(voucher, HttpStatus.OK);
+        return new ResponseEntity<>(voucher, HttpStatus.CREATED);
     }
 
     @DeleteMapping(

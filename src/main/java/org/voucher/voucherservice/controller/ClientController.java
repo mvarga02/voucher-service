@@ -1,7 +1,5 @@
 package org.voucher.voucherservice.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +17,6 @@ import org.voucher.voucherservice.service.VoucherService;
 @RestController
 @RequestMapping("api/client")
 public class ClientController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientController.class);
-
     private final VoucherService voucherService;
 
     public ClientController(VoucherService voucherService) {
